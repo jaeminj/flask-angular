@@ -11,22 +11,21 @@
     <script src="{{ url_for('static', filename='js/controllers/main-controller.js') }}"></script>
     <script src="{{ url_for('static', filename='js/controllers/hello-controller.js') }}"></script>
     <script src="{{ url_for('static', filename='js/controllers/goodbye-controller.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/controllers/login.controller.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/controllers/register.controller.js') }}"></script>
     <script src="{{ url_for('static', filename='js/services/api-service.js') }}"></script>
     <base href="/" />
   </head>
   <body data-ng-controller="MainController as main">
     <div class="container">
-      <h1><a href="/">Network Security Monitoring System</a></h1>
+      <h1><a href="/">Flask-AngularJS Boilerplate</a></h1>
       <nav class="navbar navbar-default" role="navigation">
         <div class="container-fluid">
-	<div ng-include="user.admin && '/static/partials/admin.navbar.html' || user.logon && '/static/partials/user.navbar.html' || '/static/partials/login.navbar.html' "></div>
+          <div class="navbar-header">
+            <a class="navbar-brand" href="#/hello">hello</a>
+            <a class="navbar-brand" href="#/goodbye">goodbye</a>
+          </div>
         </div>
       </nav>
-      <div data-ng-view>
-     </div>
-</div>
+      <div data-ng-view></div>
     </div>
    
   </body>

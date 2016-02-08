@@ -1,1 +1,2 @@
 <h2>Main</h2>
+<div ng-include="user.admin && '/static/partials/admin.main.html' || user.logon && '/static/partials/user.main.html' || '/static/partials/login.view.html' ">

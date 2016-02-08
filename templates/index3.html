@@ -1,0 +1,64 @@
+<!doctype html>
+<html ng-app="cookieDemo" lang="ko-KR">
+<head>
+<meta charset="utf-8">
+<title></title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='lib/bootstrap/dist/css/bootstrap.css') }}">
+    <script src="{{ url_for('static', filename='lib/angular/angular.js') }}"></script>
+    <script src="{{ url_for('static', filename='lib/angular-cookies/angular-cookies.js') }}"></script>
+    <script src="{{ url_for('static', filename='lib/angular-route/angular-route.js') }}"></script>
+    <script src="{{ url_for('static', filename='lib/angular-bootstrap/ui-bootstrap.js') }}"></script>
+    <script src="{{ url_for('static', filename='lib/angular-bootstrap/ui-bootstrap-tpls.js') }}"></script>
+<script>
+angular.module('cookieDemo', ['ngCookies'])
+.controller("mainCtrl", ['$scope', '$http', '$cookies', function($scope, $http, $cookies){
+
+$scope.value = $cookies.get('test') || '없음';
+
+$scope.getValue = function(){
+	$scope.value = $cookies.get('test') || '없음';
+	$scope.value = $cookies.get("test");
+};
+
+$scope.putValue = function(iV){
+	$cookies.put("test", iV);
+};
+
+$scope.user = {};
+$scope.user.user_id = '111111';
+$scope.user.user_key = '111111';
+
+$scope.sendData = function() {
+    alert($scope.user.kname);
+    $http({
+        url: '/api/echo',
+        method: "POST",
+        data: $scope.user
+    })
+    .then(function(response) {
+            // success
+
+    }, 
+    function(response) { // optional
+            // failed
+    });
+};
+
+}])
+</script>
+
+
+<head>
+<body ng-controller="mainCtrl">
+<h1>Cookie 서비스 사용</h1>
+<p>test 키로 저장된 값 : {{ value | angular }}</p>
+<button ng-click="getValue()">쿠키가져오기</button>
+<br>
+<input type="text" ng-model="iValue"><button ng-click="putValue(iValue)">쿠키저장</button>
+<form name=form>
+<input type=text ng-model='user.user_id' >
+<input type=text ng-model='user.user_key' >
+<input type=button ng-click="sendData()">
+</form>
+</body>  
+</html>
