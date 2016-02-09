@@ -25,11 +25,15 @@ $scope.putValue = function(iV){
 };
 
 $scope.user = {};
-$scope.user.user_id = '111111';
-$scope.user.user_key = '111111';
+$scope.user.user_id =  null ;
+$scope.user.user_key = null;
+$scope.user.descr = null ; 
+
+$scope.code = null;
+$scope.response = null;
 
 $scope.sendData = function() {
-    alert($scope.user.kname);
+	$scope.user.descr = null;
     $http({
         url: '/api/echo',
         method: "POST",
@@ -37,10 +41,18 @@ $scope.sendData = function() {
     })
     .then(function(response) {
             // success
+	$scope.code = response.code ;
+	$scope.data = response.data;
+	$scope.user.descr = angular.toJson($scope.data, true);
+	$scope.user.user_id = $scope.data.user_id + "a";
+	$scope.user.user_key = $scope.data.user_key + "b";
 
+	//	$scope.user.descr = $scope.data;
     }, 
     function(response) { // optional
             // failed
+	$scope.code = response.code ;
+	$scope.data = response.data || 'request failed' ;
     });
 };
 
@@ -60,5 +72,6 @@ $scope.sendData = function() {
 <input type=text ng-model='user.user_key' >
 <input type=button ng-click="sendData()">
 </form>
+<textarea ng-model='user.descr' ></textarea>
 </body>  
 </html>
