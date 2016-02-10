@@ -90,6 +90,23 @@ def echo():
     print(data['user_id'])
     return jsonify(data)
 
+
+@app.route('/register' , methods=['GET','POST'])
+def register():
+    if request.method == 'GET':
+        return render_template('register.html')
+    user = User(request.form['username'] , request.form['password'],request.form['email'])
+    db.session.add(user)
+    db.session.commit()
+    flash('User successfully registered')
+    return redirect(url_for('login'))
+ 
+@app.route('/login',methods=['GET','POST'])
+def login():
+    if request.method == 'GET':
+        return render_template('login.html')
+    return redirect(url_for('index'))
+
 app.wsgi_app = ProxyFix(app.wsgi_app)
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True, port=5000)
